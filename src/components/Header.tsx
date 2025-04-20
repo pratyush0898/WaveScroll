@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
+import { ThemeToggle } from './ThemeToggle';
+import { siteContent } from '../content/siteContent';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,23 +26,20 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Articles', path: '/articles' },
-    { name: 'Contact', path: '/contact' },
-  ];
+  const navItems = siteContent.navigation.main;
   
   return (
     <header 
       className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/80 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-4'
+        isScrolled 
+          ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md py-2' 
+          : 'bg-transparent py-4'
       }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-            WaveScroll
+            {siteContent.siteInfo.name}
           </Link>
           
           <div className="hidden md:flex items-center space-x-8">
@@ -50,8 +49,8 @@ const Header = () => {
                   <li key={item.path}>
                     <Link 
                       to={item.path}
-                      className={`relative text-sm font-medium transition-colors hover:text-primary ${
-                        location.pathname === item.path ? 'text-primary' : 'text-gray-700'
+                      className={`relative text-sm font-medium transition-colors hover:text-primary dark:hover:text-primary dark:text-gray-300 ${
+                        location.pathname === item.path ? 'text-primary dark:text-primary' : 'text-gray-700 dark:text-gray-300'
                       }`}
                     >
                       {item.name}
@@ -68,37 +67,45 @@ const Header = () => {
               </ul>
             </nav>
             
-            <Button asChild className="bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 transition-opacity">
-              <Link to="/contact">Get in Touch</Link>
-            </Button>
+            <div className="flex items-center space-x-2">
+              <ThemeToggle />
+              
+              <Button asChild className="bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 transition-opacity">
+                <Link to="/contact">Get in Touch</Link>
+              </Button>
+            </div>
           </div>
           
-          <Sheet>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[80%]">
-              <nav className="flex flex-col gap-4 mt-8">
-                {navItems.map((item) => (
-                  <Link 
-                    key={item.path}
-                    to={item.path} 
-                    className={`text-lg px-2 py-1 rounded-md transition-colors ${
-                      location.pathname === item.path ? 'bg-muted text-primary' : 'hover:bg-muted'
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-                <Button asChild className="mt-4 w-full bg-gradient-to-r from-primary to-purple-600">
-                  <Link to="/contact">Get in Touch</Link>
+          <div className="flex items-center space-x-2 md:hidden">
+            <ThemeToggle />
+            
+            <Sheet>
+              <SheetTrigger asChild className="md:hidden">
+                <Button variant="ghost" size="icon">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Toggle menu</span>
                 </Button>
-              </nav>
-            </SheetContent>
-          </Sheet>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[80%]">
+                <nav className="flex flex-col gap-4 mt-8">
+                  {navItems.map((item) => (
+                    <Link 
+                      key={item.path}
+                      to={item.path} 
+                      className={`text-lg px-2 py-1 rounded-md transition-colors ${
+                        location.pathname === item.path ? 'bg-muted text-primary' : 'hover:bg-muted'
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                  <Button asChild className="mt-4 w-full bg-gradient-to-r from-primary to-purple-600">
+                    <Link to="/contact">Get in Touch</Link>
+                  </Button>
+                </nav>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </header>
