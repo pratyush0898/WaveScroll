@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { siteContent } from '../content/siteContent';
-import { Laptop, Code, Search, Layout } from 'lucide-react';
+import { Laptop, Code, Search, Layout, Palette } from 'lucide-react';
 import { useScrollAnimation, staggerContainerVariants, fadeInUpVariants } from '../hooks/useScrollAnimation';
 import { Button } from '@/components/ui/button';
 

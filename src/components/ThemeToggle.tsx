@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const ThemeToggle: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
@@ -13,24 +13,33 @@ export const ThemeToggle: React.FC = () => {
       variant="ghost" 
       size="icon" 
       onClick={toggleTheme}
-      className="relative"
+      className="relative w-10 h-10 rounded-full"
     >
-      <motion.div
-        initial={{ opacity: 0, rotate: -30 }}
-        animate={{ opacity: theme === 'dark' ? 0 : 1, rotate: theme === 'dark' ? -30 : 0 }}
-        transition={{ duration: 0.3 }}
-        className="absolute"
-      >
-        <Sun className="h-5 w-5" />
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, rotate: 30 }}
-        animate={{ opacity: theme === 'dark' ? 1 : 0, rotate: theme === 'dark' ? 0 : 30 }}
-        transition={{ duration: 0.3 }}
-        className="absolute"
-      >
-        <Moon className="h-5 w-5" />
-      </motion.div>
+      <AnimatePresence mode="wait">
+        {theme === 'light' ? (
+          <motion.div
+            key="sun"
+            initial={{ scale: 0, opacity: 0, rotate: -30 }}
+            animate={{ scale: 1, opacity: 1, rotate: 0 }}
+            exit={{ scale: 0, opacity: 0, rotate: 30 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="absolute inset-0 flex items-center justify-center"
+          >
+            <Sun className="h-5 w-5" />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="moon"
+            initial={{ scale: 0, opacity: 0, rotate: 30 }}
+            animate={{ scale: 1, opacity: 1, rotate: 0 }}
+            exit={{ scale: 0, opacity: 0, rotate: -30 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="absolute inset-0 flex items-center justify-center"
+          >
+            <Moon className="h-5 w-5" />
+          </motion.div>
+        )}
+      </AnimatePresence>
       <span className="sr-only">Toggle theme</span>
     </Button>
   );
