@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ const Contact = () => {
   });
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const { theme } = useTheme();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -44,11 +46,15 @@ const Contact = () => {
   
   return (
     <div className="min-h-screen pt-20">
-      {/* Hero Section */}
+      {/* Hero Section with improved contrast */}
       <div className="bg-gradient-to-br from-primary to-purple-800 text-white py-20 relative overflow-hidden">
-        {/* Gradient Blobs */}
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-white/10 blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-purple-500/20 blur-3xl" />
+        {/* Gradient Blobs - theme sensitive */}
+        <div className={`absolute top-0 right-0 w-96 h-96 rounded-full ${
+          theme === 'light' ? 'bg-white/20' : 'bg-white/10'
+        } blur-3xl`} />
+        <div className={`absolute bottom-0 left-0 w-72 h-72 rounded-full ${
+          theme === 'light' ? 'bg-purple-400/30' : 'bg-purple-500/20'
+        } blur-3xl`} />
         
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
@@ -57,16 +63,16 @@ const Contact = () => {
             transition={{ duration: 0.8 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">Get In Touch</h1>
-            <p className="text-xl text-white/80">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-md">Get In Touch</h1>
+            <p className="text-xl text-white/90 drop-shadow-sm">
               We'd love to hear from you. Send us a message and we'll respond as soon as possible.
             </p>
           </motion.div>
         </div>
       </div>
       
-      {/* Contact Form Section */}
-      <section className="py-20 bg-white">
+      {/* Contact Form Section - theme sensitive */}
+      <section className="py-20 bg-white dark:bg-gray-900 transition-colors">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             {/* Contact Info */}
@@ -86,8 +92,8 @@ const Contact = () => {
                     <Mail className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium mb-1">Email Us</h3>
-                    <p className="text-gray-600">Our friendly team is here to help.</p>
+                    <h3 className="text-lg font-medium mb-1 dark:text-white">Email Us</h3>
+                    <p className="text-gray-600 dark:text-gray-400">Our friendly team is here to help.</p>
                     <a href="mailto:contact@wavescroll.com" className="text-primary hover:underline mt-1 block">
                       contact@wavescroll.com
                     </a>
@@ -99,8 +105,8 @@ const Contact = () => {
                     <Phone className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium mb-1">Call Us</h3>
-                    <p className="text-gray-600">Mon-Fri from 9am to 5pm.</p>
+                    <h3 className="text-lg font-medium mb-1 dark:text-white">Call Us</h3>
+                    <p className="text-gray-600 dark:text-gray-400">Mon-Fri from 9am to 5pm.</p>
                     <a href="tel:+1234567890" className="text-primary hover:underline mt-1 block">
                       +1 (234) 567-890
                     </a>
@@ -112,38 +118,38 @@ const Contact = () => {
                     <MapPin className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium mb-1">Visit Us</h3>
-                    <p className="text-gray-600">Come say hello at our office.</p>
-                    <p className="text-gray-800 mt-1">
+                    <h3 className="text-lg font-medium mb-1 dark:text-white">Visit Us</h3>
+                    <p className="text-gray-600 dark:text-gray-400">Come say hello at our office.</p>
+                    <p className="text-gray-800 dark:text-gray-200 mt-1">
                       100 Tech Avenue, San Francisco, CA 94107
                     </p>
                   </div>
                 </div>
               </div>
               
-              {/* Map or Image */}
-              <div className="mt-12 rounded-lg overflow-hidden shadow-lg">
+              {/* Map or Image with rounded corners and shadow for better UI */}
+              <div className="mt-12 rounded-lg overflow-hidden shadow-lg transition-all hover:shadow-xl">
                 <img 
                   src="https://images.unsplash.com/photo-1523287562758-66c7fc58967f"
                   alt="Office Location" 
-                  className="w-full h-64 object-cover"
+                  className="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
             </motion.div>
             
-            {/* Contact Form */}
+            {/* Contact Form with theme support */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="bg-white rounded-xl shadow-xl p-8 border border-gray-100"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-xl p-8 border border-gray-100 dark:border-gray-700"
             >
-              <h2 className="text-2xl font-bold mb-6">Send A Message</h2>
+              <h2 className="text-2xl font-bold mb-6 dark:text-white">Send A Message</h2>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Your Name
                   </label>
                   <Input
@@ -152,13 +158,13 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full"
+                    className="w-full dark:bg-gray-700 dark:border-gray-600"
                     placeholder="John Doe"
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Email Address
                   </label>
                   <Input
@@ -168,13 +174,13 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full"
+                    className="w-full dark:bg-gray-700 dark:border-gray-600"
                     placeholder="john@example.com"
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Subject
                   </label>
                   <Input
@@ -183,13 +189,13 @@ const Contact = () => {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full"
+                    className="w-full dark:bg-gray-700 dark:border-gray-600"
                     placeholder="How can we help you?"
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Your Message
                   </label>
                   <Textarea
@@ -198,7 +204,7 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    className="w-full min-h-[150px]"
+                    className="w-full min-h-[150px] dark:bg-gray-700 dark:border-gray-600"
                     placeholder="Write your message here..."
                   />
                 </div>

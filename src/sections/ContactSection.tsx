@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail } from "lucide-react";
+import { motion } from 'framer-motion';
 
 interface ContactSectionProps {
   contact: {
@@ -33,17 +34,29 @@ const ContactSection: React.FC<ContactSectionProps> = ({ contact }) => {
   };
 
   return (
-    <section id="contact" className="py-16 bg-gray-50">
+    <section id="contact" className="py-16 bg-gray-50 dark:bg-gray-800/50 transition-colors">
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">{contact.title}</h2>
-          <p className="text-xl text-gray-600">{contact.subtitle}</p>
-        </div>
+        <motion.div 
+          className="max-w-3xl mx-auto text-center mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">{contact.title}</h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300">{contact.subtitle}</p>
+        </motion.div>
         
-        <div className="bg-white rounded-lg shadow-lg p-8 max-w-2xl mx-auto">
+        <motion.div 
+          className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 max-w-2xl mx-auto border border-gray-100 dark:border-gray-700"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Your Name
               </label>
               <Input
@@ -52,12 +65,12 @@ const ContactSection: React.FC<ContactSectionProps> = ({ contact }) => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full"
+                className="w-full dark:bg-gray-700 dark:border-gray-600"
               />
             </div>
             
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Email Address
               </label>
               <Input
@@ -67,12 +80,12 @@ const ContactSection: React.FC<ContactSectionProps> = ({ contact }) => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full"
+                className="w-full dark:bg-gray-700 dark:border-gray-600"
               />
             </div>
             
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Your Message
               </label>
               <Textarea
@@ -81,23 +94,23 @@ const ContactSection: React.FC<ContactSectionProps> = ({ contact }) => {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                className="w-full min-h-[150px]"
+                className="w-full min-h-[150px] dark:bg-gray-700 dark:border-gray-600"
               />
             </div>
             
             <Button 
               type="submit" 
-              className="w-full flex items-center justify-center gap-2"
+              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 transition-opacity"
             >
               <Mail size={18} />
               Send Message
             </Button>
           </form>
           
-          <div className="mt-8 text-center text-gray-500">
+          <div className="mt-8 text-center text-gray-500 dark:text-gray-400">
             <p>Or email us directly at: <a href={`mailto:${contact.email}`} className="text-primary hover:underline">{contact.email}</a></p>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowDown } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface HeroSectionProps {
   content: {
@@ -18,6 +19,7 @@ interface HeroSectionProps {
 
 const HeroSection: React.FC<HeroSectionProps> = ({ content }) => {
   const blobRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
   
   useEffect(() => {
     // Animate blob on mouse move
@@ -57,11 +59,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({ content }) => {
       <div 
         className="absolute inset-0 z-10"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url(${content.backgroundImage})`,
+          backgroundImage: `linear-gradient(${theme === 'light' 
+            ? 'rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.5)' 
+            : 'rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)'
+          }), url(${content.backgroundImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
-          opacity: 0.4
+          opacity: theme === 'light' ? 0.75 : 0.4
         }}
       />
       
@@ -74,7 +79,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ content }) => {
           transition={{ duration: 0.8 }}
         >
           <motion.h1 
-            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-100 to-gray-300 dark:from-white dark:via-gray-200 dark:to-gray-300"
+            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-gray-200 drop-shadow-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -83,7 +88,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ content }) => {
           </motion.h1>
           
           <motion.p 
-            className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-white/90 dark:text-white/80"
+            className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-white drop-shadow-md"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -101,7 +106,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ content }) => {
               {content.features.map((feature, index) => (
                 <motion.span
                   key={index}
-                  className="px-4 py-1 rounded-full text-sm bg-white/20 backdrop-blur-sm text-white/90 border border-white/10"
+                  className="px-4 py-1 rounded-full text-sm bg-white/30 backdrop-blur-sm text-white border border-white/20 shadow-md"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.6 + (index * 0.1), duration: 0.5 }}
@@ -130,7 +135,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ content }) => {
               <Button 
                 variant="outline"
                 size="lg" 
-                className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 text-white px-8 py-3 rounded-md text-lg"
+                className="bg-white/20 backdrop-blur-sm border-white/30 hover:bg-white/30 text-white px-8 py-3 rounded-md text-lg shadow-md"
               >
                 {content.secondaryCta}
               </Button>
@@ -152,8 +157,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ content }) => {
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
         >
-          <span className="text-white/70 mb-2 text-sm">Scroll Down</span>
-          <ArrowDown className="text-white/70 w-5 h-5" />
+          <span className="text-white/90 mb-2 text-sm font-medium drop-shadow-md">Scroll Down</span>
+          <ArrowDown className="text-white/90 w-5 h-5 drop-shadow-md" />
         </motion.div>
       </motion.div>
     </section>

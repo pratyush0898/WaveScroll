@@ -27,17 +27,29 @@ const Index = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      {/* Parallax background elements */}
+      {/* Parallax background elements - adjusted for better visibility in both themes */}
       <motion.div 
-        className="fixed top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-purple-200/30 to-indigo-300/30 dark:from-purple-900/20 dark:to-indigo-800/20 rounded-full blur-3xl -z-10"
+        className={`fixed top-0 right-0 w-[800px] h-[800px] rounded-full blur-3xl -z-10 ${
+          theme === 'light' 
+            ? 'bg-gradient-to-br from-purple-300/40 to-indigo-400/40' 
+            : 'bg-gradient-to-br from-purple-900/20 to-indigo-800/20'
+        }`}
         style={{ x: 200, y: y1, opacity: backgroundOpacity }}
       />
       <motion.div 
-        className="fixed top-[30%] left-[-100px] w-[500px] h-[500px] bg-gradient-to-tr from-blue-200/20 to-cyan-300/20 dark:from-blue-900/20 dark:to-cyan-800/20 rounded-full blur-3xl -z-10"
+        className={`fixed top-[30%] left-[-100px] w-[500px] h-[500px] rounded-full blur-3xl -z-10 ${
+          theme === 'light' 
+            ? 'bg-gradient-to-tr from-blue-300/30 to-cyan-400/30' 
+            : 'bg-gradient-to-tr from-blue-900/20 to-cyan-800/20'
+        }`}
         style={{ y: y2, opacity: backgroundOpacity }}
       />
       <motion.div 
-        className="fixed bottom-[-100px] right-[20%] w-[600px] h-[600px] bg-gradient-to-tl from-pink-200/30 to-indigo-300/30 dark:from-pink-900/20 dark:to-indigo-800/20 rounded-full blur-3xl -z-10"
+        className={`fixed bottom-[-100px] right-[20%] w-[600px] h-[600px] rounded-full blur-3xl -z-10 ${
+          theme === 'light' 
+            ? 'bg-gradient-to-tl from-pink-300/40 to-indigo-400/40' 
+            : 'bg-gradient-to-tl from-pink-900/20 to-indigo-800/20'
+        }`}
         style={{ y: y3, opacity: backgroundOpacity }}
       />
 
